@@ -16,10 +16,10 @@ public class MyController {
   @PersistenceContext EntityManager entityManager;
 
   //================================================================
-  // SELECT PERSON
+  // RETURN PERSON DTO
   //================================================================
-  @RequestMapping("SelectPerson")
-  PersonDTO selectPerson() throws JsonProcessingException {
+  @RequestMapping("ReturnPersonDTO")
+  PersonDTO returnPersonDTO() throws JsonProcessingException {
 
     //CREATE QUERY
     String select = "SELECT person.name, person.age FROM Person person WHERE person.name = :name";
@@ -27,11 +27,11 @@ public class MyController {
            query.setParameter("name", "John");
 
     //SELECT OBJECT ARRAY
-    Object[] columns = (Object[]) query.getSingleResult();
+    Object[] columns = (Object[]) query.getSingleResult(); //["John",20]
 
     //DISPLAY COLUMNS
     String columnsJSON = new ObjectMapper().writeValueAsString(columns);
-    System.out.println(columnsJSON);  //["John",20]
+    System.out.println(columnsJSON);
 
     //MAP COLUMNS INTO DTO
     PersonDTO personDTO      = new PersonDTO();
